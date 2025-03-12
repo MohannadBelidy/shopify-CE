@@ -627,7 +627,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement2(element, config, children) {
+          function cloneElement(element, config, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -675,7 +675,7 @@
             }
             return ReactElement(element.type, key, ref, self, source, owner, props);
           }
-          function isValidElement3(object) {
+          function isValidElement2(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -740,7 +740,7 @@
                   return c;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement3(mappedChild)) {
+                if (isValidElement2(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -828,7 +828,7 @@
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement3(children)) {
+            if (!isValidElement2(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
@@ -1133,7 +1133,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState2(initialState) {
+          function useState3(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1145,7 +1145,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect2(create, deps) {
+          function useEffect3(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1157,7 +1157,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback2(callback, deps) {
+          function useCallback(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
@@ -1559,11 +1559,11 @@
             if (isArray(node)) {
               for (var i = 0; i < node.length; i++) {
                 var child = node[i];
-                if (isValidElement3(child)) {
+                if (isValidElement2(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement3(node)) {
+            } else if (isValidElement2(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1574,7 +1574,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement3(step.value)) {
+                    if (isValidElement2(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1697,7 +1697,7 @@
             return validatedFactory;
           }
           function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement2.apply(this, arguments);
+            var newElement = cloneElement.apply(this, arguments);
             for (var i = 2; i < arguments.length; i++) {
               validateChildKeys(arguments[i], newElement.type);
             }
@@ -1919,16 +1919,16 @@
           exports.createFactory = createFactory;
           exports.createRef = createRef;
           exports.forwardRef = forwardRef;
-          exports.isValidElement = isValidElement3;
+          exports.isValidElement = isValidElement2;
           exports.lazy = lazy;
           exports.memo = memo2;
           exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback2;
+          exports.useCallback = useCallback;
           exports.useContext = useContext3;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect2;
+          exports.useEffect = useEffect3;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1936,7 +1936,7 @@
           exports.useMemo = useMemo2;
           exports.useReducer = useReducer;
           exports.useRef = useRef2;
-          exports.useState = useState2;
+          exports.useState = useState3;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2496,7 +2496,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment = 7;
+          var Fragment2 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -2636,7 +2636,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment:
+              case Fragment2:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -7054,7 +7054,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment) {
+              if (current2 === null || current2.tag !== Fragment2) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -7457,7 +7457,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment) {
+                    if (child.tag === Fragment2) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -11634,7 +11634,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment:
+              case Fragment2:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -12075,7 +12075,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment:
+              case Fragment2:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -16841,7 +16841,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment, elements, key, mode);
+            var fiber = createFiber(Fragment2, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -18195,7 +18195,7 @@
           {
             propTypesMisspellWarningShown = false;
           }
-          function isValidElement3(object) {
+          function isValidElement2(object) {
             {
               return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
             }
@@ -18262,11 +18262,11 @@
               if (isArray(node)) {
                 for (var i = 0; i < node.length; i++) {
                   var child = node[i];
-                  if (isValidElement3(child)) {
+                  if (isValidElement2(child)) {
                     validateExplicitKey(child, parentType);
                   }
                 }
-              } else if (isValidElement3(node)) {
+              } else if (isValidElement2(node)) {
                 if (node._store) {
                   node._store.validated = true;
                 }
@@ -18277,7 +18277,7 @@
                     var iterator = iteratorFn.call(node);
                     var step;
                     while (!(step = iterator.next()).done) {
-                      if (isValidElement3(step.value)) {
+                      if (isValidElement2(step.value)) {
                         validateExplicitKey(step.value, parentType);
                       }
                     }
@@ -19142,14 +19142,26 @@
   // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/extension.mjs
   var extension = createExtensionRegistrationFunction();
 
-  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/Banner/Banner.mjs
-  var Banner = createRemoteComponent("Banner");
-
   // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/BlockStack/BlockStack.mjs
   var BlockStack = createRemoteComponent("BlockStack");
 
   // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/Checkbox/Checkbox.mjs
   var Checkbox = createRemoteComponent("Checkbox");
+
+  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/Image/Image.mjs
+  var Image = createRemoteComponent("Image");
+
+  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/InlineStack/InlineStack.mjs
+  var InlineStack = createRemoteComponent("InlineStack");
+
+  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/Pressable/Pressable.mjs
+  var Pressable = createRemoteComponent("Pressable");
+
+  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/Spinner/Spinner.mjs
+  var Spinner = createRemoteComponent("Spinner");
+
+  // node_modules/@shopify/ui-extensions/build/esm/surfaces/checkout/components/TextBlock/TextBlock.mjs
+  var TextBlock = createRemoteComponent("TextBlock");
 
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/render.mjs
   var import_react6 = __toESM(require_react(), 1);
@@ -19479,17 +19491,31 @@ ${errorInfo.componentStack}`);
     }
   };
 
-  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/Banner/Banner.mjs
-  var Banner2 = createRemoteReactComponent(Banner);
-
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/BlockStack/BlockStack.mjs
   var BlockStack2 = createRemoteReactComponent(BlockStack);
 
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/Checkbox/Checkbox.mjs
   var Checkbox2 = createRemoteReactComponent(Checkbox);
 
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/Image/Image.mjs
+  var Image2 = createRemoteReactComponent(Image);
+
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/InlineStack/InlineStack.mjs
+  var InlineStack2 = createRemoteReactComponent(InlineStack);
+
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/Pressable/Pressable.mjs
+  var Pressable2 = createRemoteReactComponent(Pressable, {
+    fragmentProps: ["overlay"]
+  });
+
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/Spinner/Spinner.mjs
+  var Spinner2 = createRemoteReactComponent(Spinner);
+
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/components/TextBlock/TextBlock.mjs
+  var TextBlock2 = createRemoteReactComponent(TextBlock);
+
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/api.mjs
-  var import_react11 = __toESM(require_react(), 1);
+  var import_react15 = __toESM(require_react(), 1);
 
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/errors.mjs
   var CheckoutUIExtensionError = class extends Error {
@@ -19507,7 +19533,7 @@ ${errorInfo.componentStack}`);
 
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/api.mjs
   function useApi(_target) {
-    const api = (0, import_react11.useContext)(ExtensionApiContext);
+    const api = (0, import_react15.useContext)(ExtensionApiContext);
     if (api == null) {
       throw new CheckoutUIExtensionError("You can only call this hook when running as a checkout UI extension.");
     }
@@ -19515,10 +19541,10 @@ ${errorInfo.componentStack}`);
   }
 
   // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/subscription.mjs
-  var import_react12 = __toESM(require_react(), 1);
+  var import_react16 = __toESM(require_react(), 1);
   function useSubscription(subscription) {
-    const [, setValue] = (0, import_react12.useState)(subscription.current);
-    (0, import_react12.useEffect)(() => {
+    const [, setValue] = (0, import_react16.useState)(subscription.current);
+    (0, import_react16.useEffect)(() => {
       let didUnsubscribe = false;
       const checkForUpdates = (newValue) => {
         if (didUnsubscribe) {
@@ -19536,68 +19562,122 @@ ${errorInfo.componentStack}`);
     return subscription.current;
   }
 
-  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/attributes.mjs
-  function useApplyAttributeChange() {
-    const api = useApi();
-    if ("applyAttributeChange" in api) {
-      return api.applyAttributeChange;
-    }
-    throw new ExtensionHasNoMethodError("applyAttributeChange", api.extension.target);
-  }
-
-  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/translate.mjs
-  var import_react13 = __toESM(require_react(), 1);
-  function useTranslate() {
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/cart-lines.mjs
+  function useCartLines() {
     const {
-      i18n
+      lines
     } = useApi();
-    const translate = (0, import_react13.useCallback)((...args) => {
-      const translation = i18n.translate(...args);
-      if (!Array.isArray(translation)) {
-        return translation;
-      }
-      return translation.map((part, index) => {
-        if (/* @__PURE__ */ (0, import_react13.isValidElement)(part)) {
-          return /* @__PURE__ */ (0, import_react13.cloneElement)(part, {
-            key: index
-          });
-        }
-        return part;
-      });
-    }, [i18n]);
-    return translate;
+    return useSubscription(lines);
+  }
+  function useApplyCartLinesChange() {
+    const api = useApi();
+    if ("applyCartLinesChange" in api) {
+      return api.applyCartLinesChange;
+    }
+    throw new ExtensionHasNoMethodError("applyCartLinesChange", api.extension.target);
   }
 
-  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/instructions.mjs
-  function useInstructions() {
-    return useSubscription(useApi().instructions);
+  // node_modules/@shopify/ui-extensions-react/build/esm/surfaces/checkout/hooks/settings.mjs
+  function useSettings() {
+    const settings = useSubscription(useApi().settings);
+    return settings;
   }
 
   // extensions/checkout-ui/src/Checkout.jsx
+  var import_react17 = __toESM(require_react());
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   var Checkout_default = reactExtension("purchase.checkout.block.render", () => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Extension, {}));
   function Extension() {
-    const translate = useTranslate();
-    const { extension: extension2 } = useApi();
-    const instructions = useInstructions();
-    const applyAttributeChange = useApplyAttributeChange();
-    if (!instructions.attributes.canUpdateAttributes) {
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Banner2, { title: "checkout-ui", status: "warning", children: translate("attributeChangesAreNotSupported") });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { border: "dotted", padding: "tight", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Banner2, { title: "checkout-ui", children: "Get ready this is going to be a long day" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Checkbox2, { onChange: onCheckboxChange, children: "Apply for free gift!" })
-    ] });
-    function onCheckboxChange(isChecked) {
-      return __async(this, null, function* () {
-        const result = yield applyAttributeChange({
-          key: "requestedFreeGift",
-          type: "updateAttribute",
-          value: isChecked ? "yes" : "no"
+    const { query } = useApi();
+    const [variantData, setVariantData] = (0, import_react17.useState)(null);
+    const [isSelected, setSelected] = (0, import_react17.useState)(false);
+    const cartLines = useCartLines();
+    const applyCartLinesChange = useApplyCartLinesChange();
+    const settings = useSettings();
+    const variantId = settings.selected_variant;
+    (0, import_react17.useEffect)(() => {
+      function getVariantData() {
+        return __async(this, null, function* () {
+          const queryResult = yield query(`{ 
+        node(id: "${variantId}"){
+          ... on ProductVariant{
+            title
+            price{
+              amount
+              currencyCode
+            }
+            product{
+              title
+              featuredImage{
+                url
+                altText
+              }
+            }
+            image{
+              url
+              altText
+            }
+          }
+        }
+      }`);
+          if (queryResult.data) {
+            setVariantData(queryResult.data.node);
+            console.log(queryResult);
+          }
         });
-        console.log("applyAttributeChange result", result);
-      });
-    }
+      }
+      if (variantId) {
+        getVariantData();
+      }
+    }, [query]);
+    (0, import_react17.useEffect)(() => {
+      var _a;
+      if (isSelected) {
+        applyCartLinesChange({
+          type: "addCartLine",
+          quantity: 1,
+          merchandiseId: variantId
+        });
+      } else {
+        const cartLineId = (_a = cartLines.find(
+          (cartLine) => cartLine.merchandise.id == variantId
+        )) == null ? void 0 : _a.id;
+        if (cartLineId) {
+          applyCartLinesChange({
+            type: "removeCartLine",
+            id: cartLineId,
+            quantity: 1
+          });
+        }
+      }
+    }, [isSelected]);
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { border: "dotted", padding: "tight", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextBlock2, { children: "Hello people" }),
+      variantData && variantData.image ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(InlineStack2, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: variantData.image.url }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(TextBlock2, { children: [
+              variantData.title,
+              " - ",
+              variantData.product.title
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(TextBlock2, { children: [
+              variantData.price.amount,
+              " ",
+              variantData.price.currencyCode
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Pressable2, { onPress: () => setSelected(!isSelected), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(InlineStack2, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Checkbox2, { checked: isSelected }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(TextBlock2, { children: [
+            "This product fits with your cart! Add this item to cart",
+            " "
+          ] })
+        ] }) })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Spinner2, {})
+    ] });
   }
 })();
 //# sourceMappingURL=checkout-ui.js.map
